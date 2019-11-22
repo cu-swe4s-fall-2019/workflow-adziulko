@@ -3,30 +3,48 @@ Objectives : Express a workflow in a workflow management language.
 
 ## Getting Started
 
-
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
+- A de-identified, open access version of the sample annotations available in dbGaP. We use this file to extract the brain tissue types of individuals. (11M)
 ```
-Give examples
+$ wget https://storage.googleapis.com/gtex_analysis_v8/annotations/GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt
 ```
 
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+- Gene counts.
 ```
-Give the example
+$ wget https://storage.googleapis.com/gtex_analysis_v8/rna_seq_data/GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.acmg_59.gct.gz
 ```
 
-And repeat
+## File Instruction
 
+To get counts for desired gene:
 ```
-until finished
+$ python get_gene_counts.py --gcf GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.acmg_59.gct.gz --gn SDHB --ofn SDHB_counts.txt
+```
+--gcf = Input RNA Seq gene file (gziped)
+
+--gn = Input desired gene name
+
+--ofn = Output file with the sample ids and counts for desired gene
+
+
+To get sample ids for desired tissue type:
+```
+python get_tissue_samples.py --saf GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt --tg Brain --ofn Brain_samples.txt
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+--saf = Input file containing tissue groups and sample IDs
+
+--tg = Desired tissue group
+
+--ofn = Output file with the sample ids for desired tissue group
+
+
+To make boxplot:
+```
+python box.py --tgs Brain --gns SDHB --ofn Brain_SDHB.png
+```
+
+--tgs = Input tissue id txt file
+
+--gns = Input gene counts txt file 
+
+--ofn = Output file boxplot

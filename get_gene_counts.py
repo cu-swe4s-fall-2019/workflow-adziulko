@@ -27,7 +27,7 @@ def main():
     args = parser.parse_args()
 
 
-    gene_count_file = args.fngc
+    gene_count_file = args.gcf
     gene_name = args.gn
     output_file_name = args.ofn
 
